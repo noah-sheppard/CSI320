@@ -1,0 +1,9 @@
+. (Join-Path $PSScriptRoot "Main.ps1")
+
+clear
+
+$loginoutsTable = getDays(14)
+$loginoutsTable
+
+$logs = startStop
+$log
