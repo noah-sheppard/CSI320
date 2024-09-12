@@ -1,0 +1,58 @@
+
+
+
+
+function getDays($days) {
+
+$loginouts = Get-EventLog system -source Microsoft-Windows-WinLogon -After (Get-Date).AddDays($days)
+
+$loginoutsTable = @()
+
+
+for ($i=0; $i -lt $loginouts.Count; $i++) {
+
+$event = ""
+
+if($loginouts[$i].InstanceId -eq 7001) {$event="Logon"}
+if($loginouts[$i].InstanceId -eq 7002) {$event="Logoff"}
+
+$user = $loginouts[$i].ReplacementStrings[1]
+
+$loginoutsTable += [PSCustomObject]@{"Time" = $loginouts[$i].TimeGenerated
+"Id" = $loginouts[$i].InstanceId
+"Event" = $event
+"User" = (New-Object System.Security.Principal.SecurityIdentifier($user).Translate([System.Security.Principal.NTAccount]))}
+
+}
+
+return $loginoutsTable
+
+}
+
+function startStop() {
+
+$startStops = Get-EventLog system
+$logs = @()
+
+for ($i=0; $i -lt $stopStarts.Count; $i++) {
+
+$id = $startStops[$i].EventID
+if ($id -notin @(6005, 6006)) {
+continue
+}
+
+$event = if ($id -eq 6006) { "Shutdown" } elseif ($id -eq 6005) { "Startup" }
+$log = $startStops[$i]
+
+$loginoutsTable += [PSCustomObject]@{"Time" = $loginouts[$i].TimeGenerated
+"Id" = $loginouts[$i].EventID
+"Event" = $event
+"User" = (New-Object System.Security.Principal.SecurityIdentifier($system).Translate([System.Security.Principal.NTAccount]))}
+}
+
+return $loginoutsTable
+}
+
+
+
+
