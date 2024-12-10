@@ -23,4 +23,4 @@ OUTPUT_HTML="report.html"
 
 sudo mv "$OUTPUT_HTML" /var/www/html/
 
-echo "HTML report saved to /var/www/html/report.html"
+echo "Saved to /var/www/html/report.html"
