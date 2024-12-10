@@ -15,4 +15,4 @@ while read -r IOC; do
     grep "$IOC" "$LOG_FILE" | awk '{print $1, $4, $7}' >> $OUTPUT_FILE
 done < "$IOC_FILE"
 
-echo "Matching logs saved to $OUTPUT_FILE"
+echo "Saved to $OUTPUT_FILE"
